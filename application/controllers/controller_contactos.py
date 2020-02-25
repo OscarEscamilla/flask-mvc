@@ -1,6 +1,6 @@
 from application import app
 from flask import Flask, jsonify#importamos los modulos necesarios
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from application.models.model_contactos import Contactos
 
 model = Contactos()
@@ -9,8 +9,12 @@ model = Contactos()
 #route index
 @app.route('/', methods = ['GET'])
 def index():
-    data = model.get_contactos()
-    return render_template('index.html', data = data)
+    session['user'] = False
+    if session['user']:
+        data = model.get_contactos()
+        return render_template('index.html', data = data)
+    else:
+        return "no esta logueado"
 
 
 

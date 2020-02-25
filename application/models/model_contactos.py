@@ -35,7 +35,7 @@ class Contactos():
             print("Error 002 function delete_contacto")
 
 
-    def get_by_id(self, id):
+    def get_by_id(self, id: int)-> tuple:
         try:
             cur = self.mysql.connection.cursor()
             sql = "SELECT * FROM contactos WHERE id = {id}"
@@ -46,7 +46,7 @@ class Contactos():
             print('Error function det_by_id')
 
             
-    def update_contacto(self, id, nombre, telefono, email):
+    def update_contacto(self, id: int , nombre: str, telefono: int, email: str) -> int:
         try:
             cur = self.mysql.connection.cursor()
             sql = 'UPDATE contactos SET nombre = %s, telefono = %s, email = %s WHERE id = %s'
