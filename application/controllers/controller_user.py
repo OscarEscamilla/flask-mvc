@@ -3,13 +3,12 @@ from flask import render_template, request, redirect , url_for, flash
 
 
 
-
-
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
+
         
         email = request.form['email']
         password = request.form['pass']

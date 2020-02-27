@@ -2,6 +2,7 @@ from application import app
 from flask import Flask, jsonify#importamos los modulos necesarios
 from flask import render_template, request, redirect, url_for, flash, session
 from application.models.model_contactos import Contactos
+from application.config.mongodb import mdb
 
 model = Contactos()
 
@@ -9,12 +10,13 @@ model = Contactos()
 #route index
 @app.route('/', methods = ['GET'])
 def index():
-    session['user'] = False
+    session['user'] = True
     if session['user']:
-        data = model.get_contactos()
+        collection = mdb["amigos"]
+        data = { "contactos" : model.get_contactos(), "amigos": collection.find() } 
         return render_template('index.html', data = data)
     else:
-        return "no esta logueado"
+        return redirect(url_for('login'))
 
 
 
