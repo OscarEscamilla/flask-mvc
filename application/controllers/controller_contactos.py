@@ -2,9 +2,12 @@ from application import app
 from flask import Flask, jsonify#importamos los modulos necesarios
 from flask import render_template, request, redirect, url_for, flash, session
 from application.models.model_contactos import Contactos
-from application.config.mongodb import mdb
+from application.config.mongodb import ConexionMongo
 
 model = Contactos()
+
+mdb = ConexionMongo().connect_mongo()
+# mdb = con_mongo.connect_mongo() 
 
 
 #route index
