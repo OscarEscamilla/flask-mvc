@@ -1,9 +1,10 @@
 from application import app
 from flask import render_template, request, redirect , url_for, flash
+from application.config.routes import urls
 
 
 
-@app.route('/login', methods = ['POST', 'GET'])
+@app.route(urls['login'], methods = ['POST', 'GET'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')

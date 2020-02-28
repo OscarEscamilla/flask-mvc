@@ -3,6 +3,7 @@ from flask import Flask, jsonify#importamos los modulos necesarios
 from flask import render_template, request, redirect, url_for, flash, session
 from application.models.model_contactos import Contactos
 from application.config.mongodb import ConexionMongo
+from application.config.routes import urls
 
 model = Contactos()
 
@@ -11,7 +12,7 @@ mdb = ConexionMongo().connect_mongo()
 
 
 #route index
-@app.route('/', methods = ['GET'])
+@app.route(urls['index'], methods = ['GET'])
 def index():
     session['user'] = True
     if session['user']:
@@ -23,7 +24,7 @@ def index():
 
 
 
-@app.route('/add' , methods = ['POST']) #indicamos que la ruta va recibir parametros por post
+@app.route(urls['add.user'] , methods = ['POST']) #indicamos que la ruta va recibir parametros por post
 def add():
     if request.method == 'POST':
         try:
@@ -41,7 +42,7 @@ def add():
             return redirect(url_for('index'))#redireciona al mismo index
         
 
-@app.route('/delete/<string:id>', methods = ['GET'])
+@app.route(urls['delete.user'] , methods = ['GET'])
 def delete(id):
     res = model.delete_contactos(id)
     if res == 1:
@@ -51,7 +52,7 @@ def delete(id):
     return redirect(url_for('index'))
 
 # actualizacion de contactos en espera de peticiones post y get para renderizar la vista con sus datos
-@app.route('/update/<string:id>', methods = ['POST', 'GET'])
+@app.route(urls['update.user'] , methods = ['POST', 'GET'])
 def update(id):
     if request.method == 'POST':
         nombre = request.form['nombre']
